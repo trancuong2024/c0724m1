@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label for="name">Name</label>
+<input id="name" placeholder="Enter name" >
+<button onclick="addNewProduct()">Add new product</button>
+<p id="result"></p>
+
+<script>
+    // CRUD : Create, read, update, Delete;
+    let productList = ["sam sung", "iphone", "Nokia", "BPhone"];
+    display(productList);
+
+    function display(list) {
+        let tableString = `<table border="1" style="border-collapse: collapse">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Name</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>`
+
+        for (let i = 0; i < list.length; i++) {
+            tableString += `<tr>
+                                <td>${i + 1}</td>
+                                <td>${list[i]}</td>
+                               <td><button onclick="editProduct(${i})">Edit</button></td>
+                                <td><button onclick="deleteProduct(${i})">Delete</button></td>
+                            </tr>`
+        }
+        tableString += `</table>`
+        document.getElementById("result").innerHTML = tableString;
+    }
+
+    // function display1(list) {
+    //     let tableString = `<table border="1" style="border-collapse: collapse">
+    //                             <tr>
+    //                                 <th>STT</th>
+    //                                 <th>Name</th>
+    //                                 <th>Edit</th>
+    //                                 <th>Delete</th>
+    //                             </tr>`
+    //
+    //     productList.map((e,i)=>{
+    //         tableString +=`<tr>
+    //                             <td>${i + 1}</td>
+    //                             <td>${e}</td>
+    //                             <td><button>Edit</button></td>
+    //                             <td><button>Delete</button></td>
+    //                         </tr>`
+    //     })
+    //
+    //     tableString += `</table>`
+    //     document.getElementById("result").innerHTML = tableString;
+    // }
+
+    function addNewProduct() {
+        let newProduct = document.getElementById("name").value;
+        if (newProduct!==""){
+            productList.push(newProduct);
+            document.getElementById("name").value="";
+            display(productList);
+        }else {
+            alert("Yêu cầu nhập tên sản phẩm")
+        }
+    }
+    function deleteProduct(index) {
+        let conf = confirm("Bạn có muốn xoá "+ productList[index] + "???");
+        if (conf){
+            productList.splice(index,1);
+            display(productList);
+        }else {
+            alert("Bạn không muốn xoá!!")
+        }
+
+    }
+    function editProduct(index) {
+        let editName = prompt(productList[index] + " Nhập tên mới?")
+        if (editName!=="" && editName!=null){
+            productList[index]= editName;
+            display(productList);
+        }else {
+            alert("Yêu nhập lại tên")
+        }
+    }
+</script>
+</body>
+</html>
